@@ -5,6 +5,7 @@ export function SearchBar() {
   const [userValue, setUserValue] = useState("");
   const [tasks, setTasks] = useState<string[]>([]);
 
+
   const handleAddTask = () => {
     if (!userValue.trim()) return;
 
@@ -14,6 +15,15 @@ export function SearchBar() {
 
   const handleDeleteTask = (index: number) => {
     setTasks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleEdit = (index: number) => {
+    const newTask = prompt("Edit task:", tasks[index]);
+    if (newTask !== null && newTask.trim() !== "") {
+      setTasks((prev) =>
+        prev.map((task, i) => (i === index ? newTask : task))
+      );
+    }
   };
 
   return (
@@ -37,6 +47,9 @@ export function SearchBar() {
               onClick={() => handleDeleteTask(index)}
             >
               Delete
+            </button>
+            <button className="delete-btn" onClick={() => handleEdit(index)}>
+              Edit
             </button>
           </div>
         ))}
